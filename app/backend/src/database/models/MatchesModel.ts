@@ -4,6 +4,11 @@ import Teams from './TeamsModel';
 
 class Matches extends Model {
   public id!: number;
+  public homeTeam: number;
+  public homeTeamGoals: number;
+  public awayTeam: number;
+  public awayTeamGoals: number;
+  public inProgress: boolean;
 }
 
 Matches.init(
@@ -14,19 +19,19 @@ Matches.init(
       autoIncrement: true,
       type: DataTypes.INTEGER,
     },
-    home_team: {
+    homeTeam: {
       type: DataTypes.INTEGER,
     },
-    home_team_goals: {
+    homeTeamGoals: {
       type: DataTypes.INTEGER,
     },
-    away_team: {
+    awayTeam: {
       type: DataTypes.INTEGER,
     },
-    away_team_goals: {
+    awayTeamGoals: {
       type: DataTypes.INTEGER,
     },
-    in_progress: {
+    inProgress: {
       type: DataTypes.BOOLEAN,
     },
   },
@@ -35,7 +40,7 @@ Matches.init(
     sequelize: db,
     modelName: 'matches',
     timestamps: false,
-  }
+  },
 );
 
 Matches.hasOne(Teams, { foreignKey: 'homeTeam', as: 'teams_home' });
