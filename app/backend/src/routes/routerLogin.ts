@@ -1,24 +1,19 @@
 import * as express from 'express';
-import LoginService from '../services/LoginService';
+import { validatePassword, validateEmail } from '../middlewares/validateLogin';
 import LoginController from '../controllers/LoginController';
-import validateLogin from '../middlewares/validateLogin';
-
-const entityFactory = () => {
-  const service = new LoginService();
-  const controller = new LoginController(service);
-  return controller;
-};
+import verifyToken from '../middlewares/validateTkn';
 
 const routerLogin = express.Router();
 
-const controllerLogin = entityFactory();
+const controllerLogin = new LoginController();
 
-routerLogin.post('/', validateLogin, (req, res, next) => {
-  controllerLogin.login(req, res, next);
-});
+routerLogin.post(
+  '/login',
+  validateEmail,
+  validatePassword,
+  controllerLogin.createToken,
+);
 
-routerLogin.get('/validate', (req, res, next)=>{
-  controllerLogin.
-})
+routerLogin.get('login/validate', verifyToken);
 
 export default routerLogin;

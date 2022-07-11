@@ -1,36 +1,25 @@
 import { NextFunction, Request, Response } from 'express';
-import { IJwt, IUserService } from '../database/interfaces';
+import LoginService from '../services/LoginService';
+import { IUser } from '../database/interfaces';
 
 export default class LoginController {
-  constructor(private service: IUserService) {
-    this.service = service;
+  public login: LoginService;
+
+  constructor() {
+    this.login = new LoginService();
   }
 
-  login = async (
+  public createToken = async (
     req: Request,
     res: Response,
     next: NextFunction,
-  ): Promise<void> => {
+  ) => {
     try {
-      const { email, password } = req.body;
-
-      const token = await this.service.login({ email, password });
-
+      const user: IUser = req.body;
+      const token = await this.login.generateToken(user);
       res.status(200).json({ token });
-    } catch (error) {
-      console.log(error);
-      next(error);
+    } catch (err) {
+      next(err);
     }
   };
-
-  validateLogin(req: Request, res: Response, next: NextFunction) {
-    try {
-      const { authorization } = req.headers;
-      const token = authorization as string;
-      const { role } = this.service.validateLogin(token) as IJwt;
-      return res.status(200).json({ role });
-    } catch (error) {
-      next(error);
-    }
-  }
 }
