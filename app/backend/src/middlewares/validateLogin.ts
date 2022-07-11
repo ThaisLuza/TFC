@@ -1,12 +1,9 @@
-// import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response } from 'express';
+import ErrorStatus from '../utils/errorStatus';
 
-// import IUser from 'src/database/interfaces/IUser';
+const validateLogin = (req: Request, res: Response, next: NextFunction) => {
+  const { email, password } = req.body;
+  if (!email || !password) { return next(new ErrorStatus(400, 'All fields must be filled')); }
+};
 
-// function validateFields(email: string, password: string) {
-//   const regexValidEmail = /^[a-z0-9.]+@[a-z0-9]+\.[a-z]+\.([a-z]+)?$/i;
-//   const validEmail = regexValidEmail.test(email);
-
-//   if (email.length <= 0 || !validEmail) {
-//     const message = 'All fields must be filled';
-//   }
-// }
+export default validateLogin;

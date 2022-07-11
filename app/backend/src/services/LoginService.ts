@@ -1,29 +1,30 @@
-import * as bcrypt from 'bcryptjs';
-import { IUser } from '../database/interfaces/index';
-import User from '../database/models/UserModel';
-import generateJWT from '../utils/jwt';
+import { ILogin, IUserModel, IUserService } from '../database/interfaces/index';
+
+import Jwt from '../utils/Jwt';
 import ErrorStatus from '../utils/errorStatus';
 
-class LoginService {
-  private model = User;
+export default class LoginService implements IUserService {
+  jwtCode = new Jwt();
+  constructor(private model: IUserModel) {
+    this.model = model;
+  }
 
-  public async login(emailReq: string, password: string): Promise<string> {
-    const foundUser = (await this.model.findOne({
-      where: { email: emailReq },
-    })) as IUser;
+  async login(user: ILogin): Promise<string> {
+    const findUser = await this.model.login(user.email);
 
-    if (!foundUser) throw new ErrorStatus(401, 'Incorrect email or password');
+    if (!findUser) {
+      throw new ErrorStatus(401, 'Incorrect email or password');
+    }
 
-    const validUser = await bcrypt.compare(password, foundUser.password);
+    const { id, role } = findUser;
 
-    if (!validUser) throw new ErrorStatus(401, 'Incorrect email or password');
-
-    const { id, email, username, role } = foundUser;
-
-    const token = generateJWT({ id, email, username, role });
+    const token = this.jwtCode.generateJWT({ id, role });
 
     return token;
   }
-}
 
-export default LoginService;
+  validateLogin(token: string) {
+    const decoded = this.jwtCode.validateToken(token);
+    return decoded;
+  }
+}
