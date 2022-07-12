@@ -1,7 +1,7 @@
 import * as jwt from 'jsonwebtoken';
 import { IUser } from '../database/interfaces';
 
-const jwtSecret = process.env.JWT_SECRET || 'mysecret';
+const jwtSecret = process.env.JWT_SECRET || 'senhasecreta';
 
 const token = (user: IUser) => {
   const generateToken = jwt.sign({ user }, jwtSecret, {

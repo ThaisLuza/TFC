@@ -33,4 +33,4 @@ const validatePassword = (req: Request, res: Response, next: NextFunction) => {
 
 export { validateEmail, validatePassword };
 
-// código Carolina Ariadne;
+// validação de joi visualizado da colega Carolina Ariadne;

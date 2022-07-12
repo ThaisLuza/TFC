@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import * as jwt from 'jsonwebtoken';
 import ErrorStatus from '../utils/errorStatus';
-import { IDecode } from '../database/interfaces/index';
+import { IAuth } from '../database/interfaces/index';
 
 const jwtSecret = process.env.JWT_SECRET || 'mysecret';
 
@@ -13,12 +13,10 @@ const verifyToken = (req: Request, res: Response, next: NextFunction) => {
     }
 
     const decoded = jwt.verify(authorization, jwtSecret);
-    console.log(decoded, 'decoded');
 
-    const { user } = decoded as IDecode;
+    const { user } = decoded as IAuth;
 
     res.status(200).json({ role: user.role });
-    console.log({ role: user.role }, 'role: alguma coisa');
   } catch (err) {
     next(err);
   }

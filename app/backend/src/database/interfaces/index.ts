@@ -9,13 +9,11 @@ export interface IUser extends ILogin {
   role: string;
 }
 
-export interface IDecode {
+export interface IAuth {
   user: {
     id: number,
     username: string,
     role: string,
     email: string,
-    iat: number,
-    exp: number
   }
 }

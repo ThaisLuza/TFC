@@ -7,21 +7,21 @@ import ErrorStatus from '../utils/errorStatus';
 
 export default class LoginService {
   generateToken = async (user: IUser) => {
-    const newUser = await User.findOne({
+    const newLog = await User.findOne({
       where: { email: user.email },
     });
 
-    if (!newUser) {
+    if (!newLog) {
       throw new ErrorStatus(401, 'Incorrect email or password');
     }
 
-    const validPass = await bcrypt.compare(user.password, newUser.password);
+    const validPass = await bcrypt.compare(user.password, newLog.password);
 
     if (!validPass) {
       throw new ErrorStatus(401, 'Incorrect email or password');
     }
 
-    const tkn = generateJwt(newUser);
+    const tkn = generateJwt(newLog);
     return tkn;
   };
 }
