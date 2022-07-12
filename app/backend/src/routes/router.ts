@@ -1,19 +1,23 @@
 import * as express from 'express';
 import { validatePassword, validateEmail } from '../middlewares/validateLogin';
 import LoginController from '../controllers/LoginController';
+import TeamsController from '../controllers/TeamsController';
 import verifyToken from '../middlewares/validateTkn';
 
-const routerLogin = express.Router();
+const router = express.Router();
 
 const controllerLogin = new LoginController();
+const controllerTeams = new TeamsController();
 
-routerLogin.post(
+router.post(
   '/login',
   validateEmail,
   validatePassword,
   controllerLogin.createToken,
 );
 
-routerLogin.get('login/validate', verifyToken);
+router.get('login/validate', verifyToken);
 
-export default routerLogin;
+router.get('/teams', controllerTeams.getAll);
+
+export default router;

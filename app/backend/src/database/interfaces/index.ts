@@ -11,9 +11,14 @@ export interface IUser extends ILogin {
 
 export interface IAuth {
   user: {
-    id: number,
-    username: string,
-    role: string,
-    email: string,
-  }
+    id: number;
+    username: string;
+    role: string;
+    email: string;
+  };
+}
+
+export interface ITeam {
+  id: number;
+  teamName: string;
 }
