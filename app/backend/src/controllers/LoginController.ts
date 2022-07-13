@@ -9,15 +9,20 @@ export default class LoginController {
     this.service = new LoginService();
   }
 
-  public createToken = async (
-    req: Request,
-    res: Response,
-    next: NextFunction,
-  ) => {
+  public createToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
       const user: IUser = req.body;
       const token = await this.service.generateToken(user);
       res.status(200).json({ token });
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  loginSucess = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { user } = req.body;
+      res.status(200).json({ role: user.role });
     } catch (err) {
       next(err);
     }

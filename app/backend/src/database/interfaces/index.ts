@@ -13,7 +13,7 @@ export interface IAuth {
   user: {
     id: number;
     username: string;
-    role: string;
+    role: 'admin' | 'user'
     email: string;
   };
 }
@@ -28,12 +28,12 @@ export interface IMatch {
   homeTeam: number;
   homeTeamGoals: number;
   awayTeam: number;
-  awayTeamGoals: number;
-  inProgress: boolean;
-  teamHome: {
-    teamName: string;
+  awayTeamGoals?: number;
+  inProgress?: boolean;
+  teamHome?: {
+    teamName?: string;
   };
-  teamAway: {
-    teamName: string;
+  teamAway?: {
+    teamName?: string;
   };
 }
