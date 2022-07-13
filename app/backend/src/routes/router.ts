@@ -18,6 +18,8 @@ router.post(
 
 router.get('login/validate', verifyToken);
 
+router.get('/teams/:id', controllerTeams.getById);
+
 router.get('/teams', controllerTeams.getAll);
 
 export default router;
