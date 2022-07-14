@@ -49,4 +49,8 @@ export default class MatchesService {
     await Match.update({ inProgress: false }, { where: { id } });
     return { message: 'Finished' };
   }
+
+  // public static async getById(id: number) {
+  //   await Match.findByPk(id)
+  // }
 }

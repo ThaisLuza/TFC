@@ -4,6 +4,7 @@ import LoginController from '../controllers/LoginController';
 import TeamsController from '../controllers/TeamsController';
 import verifyToken from '../middlewares/validateTkn';
 import MatchesController from '../controllers/MatchesController';
+import validateToken from '../middlewares/validateTokenMatch';
 import validateMatch from '../middlewares/validateMatch';
 // import validateMatch from '../middlewares/validateMatch';
 
@@ -28,7 +29,7 @@ router.get('/teams', controllerTeams.getAll);
 
 router.get('/matches', controllerMatch.getAll);
 
-router.post('/matches', validateMatch, controllerMatch.saveMatches);
+router.post('/matches', validateToken, validateMatch, controllerMatch.saveMatches);
 
 router.patch('/matches/:id/finish', controllerMatch.updateMatches);
 
