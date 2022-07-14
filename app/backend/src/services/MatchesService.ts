@@ -44,4 +44,9 @@ export default class MatchesService {
     const newMatch = await Match.create(match);
     return newMatch as ISaveMatch;
   }
+
+  public static async updateMatch(id: number | string) {
+    await Match.update({ inProgress: false }, { where: { id } });
+    return { message: 'Finished' };
+  }
 }

@@ -30,4 +30,6 @@ router.get('/matches', controllerMatch.getAll);
 
 router.post('/matches', validateMatch, controllerMatch.saveMatches);
 
+router.patch('/matches/:id/finish', controllerMatch.updateMatches);
+
 export default router;

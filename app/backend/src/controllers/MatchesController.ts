@@ -36,4 +36,14 @@ export default class MatchesController {
       next(err);
     }
   };
+
+  updateMatches = async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { id } = req.params;
+      const updatedMatch = await MatchesService.updateMatch(id);
+      return res.status(200).json(updatedMatch);
+    } catch (err) {
+      next(err);
+    }
+  };
 }
