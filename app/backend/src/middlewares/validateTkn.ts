@@ -12,10 +12,8 @@ export default function verifyToken(req: Request, res: Response, next: NextFunct
   }
   try {
     const decoded = jwt.verify(authorization, jwtSecret);
-    console.log(decoded);
     const { user } = decoded as IAuth;
     const { role } = user;
-    console.log(role);
     return res.status(200).json({ role });
   } catch (err) {
     next(err);

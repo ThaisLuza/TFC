@@ -40,3 +40,11 @@ export interface IMatch {
     teamName?: string;
   };
 }
+
+export interface ISaveMatch {
+  homeTeam: number;
+  awayTeam: number;
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+  inProgress: boolean;
+}

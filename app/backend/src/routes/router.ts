@@ -4,6 +4,8 @@ import LoginController from '../controllers/LoginController';
 import TeamsController from '../controllers/TeamsController';
 import verifyToken from '../middlewares/validateTkn';
 import MatchesController from '../controllers/MatchesController';
+import validateMatch from '../middlewares/validateMatch';
+// import validateMatch from '../middlewares/validateMatch';
 
 const router = express.Router();
 
@@ -25,5 +27,7 @@ router.get('/teams/:id', controllerTeams.getById);
 router.get('/teams', controllerTeams.getAll);
 
 router.get('/matches', controllerMatch.getAll);
+
+router.post('/matches', validateMatch, controllerMatch.saveMatches);
 
 export default router;

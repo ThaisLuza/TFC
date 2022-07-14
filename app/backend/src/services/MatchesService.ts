@@ -1,6 +1,6 @@
 import Match from '../database/models/MatchesModel';
 import TeamsModel from '../database/models/TeamsModel';
-import { IMatch } from '../database/interfaces';
+import { IMatch, ISaveMatch } from '../database/interfaces';
 
 export default class MatchesService {
   public static async getAll(): Promise<IMatch[]> {
@@ -38,5 +38,10 @@ export default class MatchesService {
       ],
     });
     return match as unknown as IMatch[];
+  }
+
+  public static async saveMatches(match: ISaveMatch):Promise<ISaveMatch> {
+    const newMatch = await Match.create(match);
+    return newMatch as ISaveMatch;
   }
 }

@@ -2,7 +2,11 @@ import { NextFunction, Request, Response } from 'express';
 import MatchesService from '../services/MatchesService';
 
 export default class MatchesController {
-  getAll = async (req: Request, res: Response, next: NextFunction): Promise<Response | void> => {
+  getAll = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> => {
     try {
       const { inProgress } = req.query;
       if (!inProgress) {
@@ -12,6 +16,22 @@ export default class MatchesController {
       const progress = inProgress === 'true';
       const match = await MatchesService.getInProgress(progress);
       return res.status(200).json(match);
+    } catch (err) {
+      next(err);
+    }
+  };
+
+  saveMatches = async (
+    req: Request,
+    res: Response,
+    next: NextFunction,
+  ): Promise<Response | void> => {
+    try {
+      // const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = req.body;
+      // const data = { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress };
+
+      const newMatch = await MatchesService.saveMatches(req.body);
+      return res.status(201).json(newMatch);
     } catch (err) {
       next(err);
     }
