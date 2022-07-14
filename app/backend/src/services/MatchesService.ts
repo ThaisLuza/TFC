@@ -20,4 +20,23 @@ export default class MatchesService {
     });
     return match as unknown as IMatch[];
   }
+
+  public static async getInProgress(inProgress:boolean): Promise<IMatch[]> {
+    const match = await Match.findAll({
+      where: { inProgress },
+      include: [
+        {
+          model: TeamsModel,
+          as: 'teamHome',
+          attributes: { exclude: ['id'] },
+        },
+        {
+          model: TeamsModel,
+          as: 'teamAway',
+          attributes: { exclude: ['id'] },
+        },
+      ],
+    });
+    return match as unknown as IMatch[];
+  }
 }

@@ -13,8 +13,11 @@ export interface IAuth {
   user: {
     id: number;
     username: string;
-    role: 'admin' | 'user'
+    role: string;
     email: string;
+    password: string;
+    iat: number;
+    exp: number;
   };
 }
 

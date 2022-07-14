@@ -18,7 +18,7 @@ router.post(
   controllerLogin.createToken,
 );
 
-router.get('login/validate', verifyToken, controllerLogin.loginSucess);
+router.get('/login/validate', verifyToken);
 
 router.get('/teams/:id', controllerTeams.getById);
 
