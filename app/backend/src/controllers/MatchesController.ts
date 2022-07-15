@@ -41,6 +41,7 @@ export default class MatchesController {
     try {
       const { id } = req.params;
       const updatedMatch = await MatchesService.updateMatch(id);
+      console.log(updatedMatch);
       return res.status(200).json(updatedMatch);
     } catch (err) {
       next(err);
