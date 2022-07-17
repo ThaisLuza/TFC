@@ -1,19 +1,21 @@
 import { Response, NextFunction, Request } from 'express';
-import * as jwt from 'jsonwebtoken';
+// import * as jwt from 'jsonwebtoken';
 import 'dotenv/config';
 // import MatchesService from '../services/MatchesService';
 import TeamService from '../services/TeamsService';
 
-const secret = process.env.JWT_SECRET || 'jwt_secret';
+// const secret = process.env.JWT_SECRET || 'jwt_secret';
 
 function validateMatch(req: Request, res: Response, next: NextFunction) {
   const { authorization } = req.headers;
+  console.log(authorization);
   const { homeTeam, awayTeam } = req.body;
 
-  if (!authorization) {
+  if ((authorization as string).length < 15) {
+    console.log('caiu no if');
     return res.status(401).json({ message: 'Token must be a valid token' });
   }
-  jwt.verify(authorization as string, secret);
+  // jwt.verify(authorization as string, secret);
 
   if (homeTeam === awayTeam) {
     return res.status(401).json({
@@ -28,17 +30,15 @@ async function verifyTeams(req: Request, res: Response, next: NextFunction) {
   const { homeTeam, awayTeam } = req.body;
 
   const homeTeams = await TeamService.getById(homeTeam);
-  console.log(homeTeams);
+  // console.log(homeTeams);
   if (!homeTeams) {
     return res.status(404).json({ message: 'There is no team with such id!' });
   }
-  console.log('nao cai no if');
   const awayTeams = await TeamService.getById(awayTeam);
-  console.log(awayTeams);
+  // console.log(awayTeams);
   if (!awayTeams) {
     return res.status(404).json({ message: 'There is no team with such id!' });
   }
-  console.log('nao cai no if');
   // console.log(homeTeams, awayTeams);
   // if (!homeTeams.id || !awayTeams.id) {
   //   console.log('caiu no if');
