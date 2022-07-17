@@ -1,6 +1,7 @@
 import Match from '../database/models/MatchesModel';
 import TeamsModel from '../database/models/TeamsModel';
 import { IMatch, ISaveMatch } from '../database/interfaces';
+// import TeamService from './TeamsService';
 
 export default class MatchesService {
   static getAll = async () :Promise<IMatch[]> => {
@@ -18,7 +19,7 @@ export default class MatchesService {
         },
       ],
     });
-    return match as unknown as IMatch[];
+    return match as IMatch[];
   };
 
   static getInProgress = async (inProgress:boolean) : Promise<IMatch[]> => {
@@ -37,7 +38,7 @@ export default class MatchesService {
         },
       ],
     });
-    return match as unknown as IMatch[];
+    return match as IMatch[];
   };
 
   static saveMatches = async (match: ISaveMatch):Promise<ISaveMatch> => {
@@ -50,7 +51,12 @@ export default class MatchesService {
     return { message: 'Finished' };
   };
 
-  // public static async getById(id: number) {
-  //   await Match.findByPk(id)
-  // }
+  // static getTeams = async (homeId: number, awayId: number) => {
+  //   const homeTeam = TeamService.getById(homeId);
+  //   const awayTeam = TeamService.getById(awayId);
+
+  //   if (!homeTeam || !awayTeam) {
+  //     return null;
+  //   }
+  // };
 }
