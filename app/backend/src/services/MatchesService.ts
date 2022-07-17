@@ -1,6 +1,6 @@
 import Match from '../database/models/MatchesModel';
 import TeamsModel from '../database/models/TeamsModel';
-import { IMatch, ISaveMatch } from '../database/interfaces';
+import { IMatch, ISaveMatch, IUpdate } from '../database/interfaces';
 // import TeamService from './TeamsService';
 
 export default class MatchesService {
@@ -59,4 +59,14 @@ export default class MatchesService {
   //     return null;
   //   }
   // };
+
+  static updateInProgress = async (match: IUpdate) => {
+    const upMatch = await Match
+      .update(
+        { homeTeamGoals: match.homeTeamGoals, awayTeamGoals: match.awayTeamGoals },
+        { where: { id: match.id } },
+      );
+    console.log(upMatch);
+    return upMatch;
+  };
 }

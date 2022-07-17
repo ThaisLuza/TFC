@@ -29,6 +29,8 @@ router.get('/matches', controllerMatch.getAll);
 
 router.post('/matches', validateMatch, verifyTeams, controllerMatch.saveMatches);
 
+router.patch('/matches/:id', controllerMatch.updateInProgress);
+
 router.patch('/matches/:id/finish', controllerMatch.updateMatches);
 
 export default router;

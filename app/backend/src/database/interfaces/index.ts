@@ -48,3 +48,9 @@ export interface ISaveMatch {
   awayTeamGoals: number;
   inProgress: boolean;
 }
+
+export interface IUpdate {
+  id: number | string;
+  homeTeamGoals: number,
+  awayTeamGoals: number,
+}

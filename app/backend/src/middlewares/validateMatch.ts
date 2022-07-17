@@ -1,10 +1,6 @@
 import { Response, NextFunction, Request } from 'express';
-// import * as jwt from 'jsonwebtoken';
 import 'dotenv/config';
-// import MatchesService from '../services/MatchesService';
 import TeamService from '../services/TeamsService';
-
-// const secret = process.env.JWT_SECRET || 'jwt_secret';
 
 function validateMatch(req: Request, res: Response, next: NextFunction) {
   const { authorization } = req.headers;
@@ -15,7 +11,6 @@ function validateMatch(req: Request, res: Response, next: NextFunction) {
     console.log('caiu no if');
     return res.status(401).json({ message: 'Token must be a valid token' });
   }
-  // jwt.verify(authorization as string, secret);
 
   if (homeTeam === awayTeam) {
     return res.status(401).json({
