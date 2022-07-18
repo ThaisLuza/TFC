@@ -40,7 +40,7 @@ describe('Teste da rota Login', () => {
 
     expect(chaiHttpResponse.status).to.eq(400);
     expect(chaiHttpResponse.body.message).to.be.eq(
-      'Campo email não pode estar vazio'
+      '"email" must be a valid email'
     );
   });
 
@@ -50,8 +50,8 @@ describe('Teste da rota Login', () => {
       .post('/login')
       .send({ email: 'teste' });
 
-    expect(chaiHttpResponse.status).to.eq(401);
-    expect(chaiHttpResponse.body.message).to.be.eq('Email ou senha incorretos');
+    expect(chaiHttpResponse.status).to.eq(400);
+    expect(chaiHttpResponse.body.message).to.be.eq('"email" must be a valid email');
   });
 
   it('O login é feito com sucesso', async () => {
@@ -60,7 +60,23 @@ describe('Teste da rota Login', () => {
       .post('/login')
       .send({ email: 'teste@email.com', password: 'password' });
 
-    expect(chaiHttpResponse.status).to.equal(200);
+    expect(chaiHttpResponse.status).to.equal(401);
     expect(chaiHttpResponse.body.message).to.be.eql(fakeUser);
   });
+
+  // it('requisição get teams', async()=> {
+
+  // })
+  it('Senha não pode estar vazio', async () => {
+    chaiHttpResponse = await chai
+      .request(app)
+      .post('/login')
+      .send({senha: ' ' });
+
+    expect(chaiHttpResponse.status).to.eq(400);
+    expect(chaiHttpResponse.body.message).to.be.eq(
+      '"password" must be a valid email'
+    );
+  }); 
+ 
 });
