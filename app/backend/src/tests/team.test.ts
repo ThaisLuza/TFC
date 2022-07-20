@@ -8,11 +8,12 @@ import { app } from '../app';
 
 import { Response } from 'superagent';
 import Teams from '../database/models/TeamsModel';
-import { isMapIterator } from 'util/types';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
+
+let chaiHttpResponse: Response;
 
 const fakeTeam = {
   id: 1,
@@ -28,9 +29,9 @@ describe('Teste da rota Teams', () => {
     (Teams.findAll as sinon.SinonStub).restore();
   });
   it('rota get /teams retorna todos os times', async () => {
-    const response = await chai.request(app).get('/teams');
-   
-    expect(response.body).to.have.property('id');
+    const  chaiHttpResponse = await chai.request(app).get('/teams');
+
+    expect(chaiHttpResponse.body).to.have.property('id');
   });
 });
 
@@ -44,12 +45,17 @@ describe('Teste da rota Teams: busca por id', () => {
   });
 
   it('rota get /teams/:id retorna apenas um time', async () => {
-    const response = await chai.request(app).get('/teams/:id');
+    const  chaiHttpResponse = await chai.request(app).get('/teams/:id');
 
-    expect(response.status).to.be.equal(200);
-    expect(response.body).to.be.eql(fakeTeam);
+    expect(chaiHttpResponse.status).to.be.equal(200);
+    expect(chaiHttpResponse.body).to.be.eql(fakeTeam);
   });
-
+  it('rota get /teams/:id retorna erro com id inexistente', async () => {
+    try {
+      chaiHttpResponse = await chai.request(app).get('/teams/555');
+    } catch (error) {
+      expect(chaiHttpResponse.status).to.be.equal(404);
+      expect(chaiHttpResponse.body.message).to.be.equal('team not found');
+    }
+  });
 });
-
-

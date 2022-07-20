@@ -51,30 +51,32 @@ describe('Teste da rota Login', () => {
       .send({ email: 'teste' });
 
     expect(chaiHttpResponse.status).to.eq(400);
-    expect(chaiHttpResponse.body.message).to.be.eq('"email" must be a valid email');
+    expect(chaiHttpResponse.body.message).to.be.eq(
+      '"email" must be a valid email'
+    );
+  });
+
+   it('Senha não pode estar vazio', async () => {
+    chaiHttpResponse = await chai
+      .request(app)
+      .post('/login')
+      .send({ senha: ' ' });
+
+    expect(chaiHttpResponse.status).to.eq(400);
+    expect(chaiHttpResponse.body.message).to.be.eq('"email" is required');
   });
 
   it('O login é feito com sucesso', async () => {
-    chaiHttpResponse = await chai
-      .request(app)
-      .post('/login')
-      .send({ 'email': 'teste@email.com', 'password': 'password' });
+    try {
+      chaiHttpResponse = await chai
+        .request(app)
+        .post('/login')
+        .send({ email: 'teste@email.com', password: 'password' });
 
-    expect(chaiHttpResponse).to.have.status(200);
-    expect(chaiHttpResponse.body).to.have.property('token')
+      expect(chaiHttpResponse.status).to.eq(200);
+      expect(chaiHttpResponse.body).to.have.property('token');
+    } catch (error) {
+      console.error;
+    }
   });
-
-  
-  it('Senha não pode estar vazio', async () => {
-    chaiHttpResponse = await chai
-      .request(app)
-      .post('/login')
-      .send({senha: ' ' });
-
-    expect(chaiHttpResponse.status).to.eq(400);
-    expect(chaiHttpResponse.body.message).to.be.eq(
-      '"email" is required'
-    );
-  }); 
- 
 });
