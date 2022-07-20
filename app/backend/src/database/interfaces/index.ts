@@ -67,3 +67,15 @@ export interface ILeaderBoard {
   goalsBalance: number;
   efficiency: number;
 }
+
+export interface IScore {
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+  goalsFavor: number;
+  goalsOwn: number;
+}
+
+export interface ILeader {
+  teamName: string;
+  teamHome: IScore [];
+}

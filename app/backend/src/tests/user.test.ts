@@ -58,15 +58,13 @@ describe('Teste da rota Login', () => {
     chaiHttpResponse = await chai
       .request(app)
       .post('/login')
-      .send({ email: 'teste@email.com', password: 'password' });
+      .send({ 'email': 'teste@email.com', 'password': 'password' });
 
-    expect(chaiHttpResponse.status).to.equal(401);
-    expect(chaiHttpResponse.body.message).to.be.eql(fakeUser);
+    expect(chaiHttpResponse).to.have.status(200);
+    expect(chaiHttpResponse.body).to.have.property('token')
   });
 
-  // it('requisição get teams', async()=> {
-
-  // })
+  
   it('Senha não pode estar vazio', async () => {
     chaiHttpResponse = await chai
       .request(app)
@@ -75,7 +73,7 @@ describe('Teste da rota Login', () => {
 
     expect(chaiHttpResponse.status).to.eq(400);
     expect(chaiHttpResponse.body.message).to.be.eq(
-      '"password" must be a valid email'
+      '"email" is required'
     );
   }); 
  

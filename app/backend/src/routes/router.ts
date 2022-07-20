@@ -5,12 +5,14 @@ import TeamsController from '../controllers/TeamsController';
 import verifyToken from '../middlewares/validateTkn';
 import MatchesController from '../controllers/MatchesController';
 import { validateMatch, verifyTeams } from '../middlewares/validateMatch';
+import LeaderBoardController from '../controllers/LearderBoardController';
 
 const router = express.Router();
 
 const controllerLogin = new LoginController();
 const controllerTeams = new TeamsController();
 const controllerMatch = new MatchesController();
+const leaderboard = new LeaderBoardController();
 
 router.post(
   '/login',
@@ -32,5 +34,7 @@ router.post('/matches', validateMatch, verifyTeams, controllerMatch.saveMatches)
 router.patch('/matches/:id', controllerMatch.updateInProgress);
 
 router.patch('/matches/:id/finish', controllerMatch.updateMatches);
+
+router.get('/leaderboard/home', leaderboard.getLeaderBoard);
 
 export default router;
